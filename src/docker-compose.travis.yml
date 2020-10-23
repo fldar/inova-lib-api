@@ -1,0 +1,41 @@
+version: '2'
+services:
+  db:
+    build: .docker/mysql
+    container_name: 'apidb'
+    restart: 'always'
+    ports:
+      - "3350:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "1234"
+    command: mysqld --sql-mode=NO_ENGINE_SUBSTITUTION
+  php:
+    build:
+      context: .docker/php-fpm
+      args:
+        TIMEZONE: ${TIMEZONE}
+    volumes:
+      - ../api:$PROJECT_DIR
+      - .docker/logs/symfony:$PROJECT_DIR/var/log
+    links:
+      - db
+  nginx:
+    build: .docker/nginx
+    container_name: nginx
+    ports:
+      - 80:80
+    links:
+      - php
+    volumes:
+      - .docker/logs/nginx:/var/log/nginx
+      - ../api:$PROJECT_DIR
+  elk:
+    image: willdurand/elk
+    ports:
+      - 81:80
+    volumes:
+      - .docker/elk/logstash:/etc/logstash
+      - .docker/elk/logstash/patterns:/opt/logstash/patterns
+    volumes_from:
+      - php
+      - nginx
