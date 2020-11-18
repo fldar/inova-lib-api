@@ -28,5 +28,5 @@ COPY symfony.pool.conf /usr/local/etc/php/php-fpm.d/
 
 CMD ["php-fpm", "-F"]
 
-WORKDIR /deve/inova/skeleton/api
+WORKDIR /deve/is/lib/api
 EXPOSE 9000
