@@ -28,7 +28,7 @@ abstract class AbstractHandledException implements HandledExceptionInterface
      * @param string $exception
      * @return string
      */
-    protected function getExceptionStringCode(string $exception)
+    protected function getExceptionStringCode(string $exception): string
     {
         $codeString = '';
         $className = $this->getClassName($exception);
