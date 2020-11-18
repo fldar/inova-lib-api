@@ -2,9 +2,9 @@
 
 namespace App\EventListener;
 
+use App\EventListener\Resolve\HandledException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
-use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 class ExceptionListener
 {
@@ -14,13 +14,16 @@ class ExceptionListener
     public function onKernelException(ExceptionEvent $event): void
     {
         $exception = $event->getThrowable();
-        $erroContent = [
-            'message' => $exception->getMessage(),
-            'file' => $exception->getFile(),
-            'line' => $exception->getLine()
-        ];
 
-        $response = new JsonResponse($erroContent);
-        $event->setResponse($response);
+        switch ($exception) {
+            case $exception instanceof \Throwable:
+                $json = (new HandledException())->getFinalError($exception);
+                break;
+            default:
+                $json = new JsonResponse();
+                break;
+        }
+
+        $event->setResponse($json);
     }
 }
