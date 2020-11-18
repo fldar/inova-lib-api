@@ -3,7 +3,7 @@
 namespace App\EventListener\Resolve;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\{Response, JsonResponse};
 
 abstract class AbstractHandledException implements HandledExceptionInterface
 {
@@ -21,7 +21,7 @@ abstract class AbstractHandledException implements HandledExceptionInterface
         return new JsonResponse([
             'erro' => self::MENSAGEM,
             'code' => $code . $throwable->getLine()
-        ]);
+        ], Response::HTTP_BAD_REQUEST);
     }
 
     /**
