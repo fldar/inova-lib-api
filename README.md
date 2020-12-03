@@ -19,3 +19,7 @@
 ##### Create Migration
 - php bin/console make:migration
 - php bin/console doctrine:migrations:migrate --env=dev
+
+##### Make DataFixture
+- php bin/console make:fixtures
+- php bin/console doctrine:fixtures:load
