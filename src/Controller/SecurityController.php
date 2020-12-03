@@ -10,6 +10,7 @@ class SecurityController extends AbstractController
 {
     /**
      * @Route("/login", name="login", methods={"POST"})
+     * @return JsonResponse
      */
     public function login(): JsonResponse
     {
@@ -19,5 +20,30 @@ class SecurityController extends AbstractController
             'username' => $user->getUsername(),
             'roles' => $user->getRoles()
         ]);
+    }
+
+    /**
+     * @Route("/logout", name="api_logout", methods={"GET"})
+     */
+    public function logout(): void
+    {
+    }
+
+    /**
+     * @Route("/logouted", name="logouted", methods={"GET"})
+     * @return JsonResponse
+     */
+    public function logouted(): JsonResponse
+    {
+        return $this->json(['message' => 'Good Bye!']);
+    }
+
+    /**
+     * @Route("/check", name="check", methods={"GET"})
+     * @return JsonResponse
+     */
+    public function teste(): JsonResponse
+    {
+        return $this->json(['message' => "Hello!"]);
     }
 }

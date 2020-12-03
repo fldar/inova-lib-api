@@ -18,6 +18,9 @@ security:
             lazy: true
             json_login:
                 check_path: /login
+            logout:
+                path: api_logout
+                target: logouted
 
     access_control:
-        - { path: '/', roles: [ROLE_ADMIN, IS_AUTHENTICATED_FULLY] }
+        - { path: '/check', roles: [ROLE_ADMIN, IS_AUTHENTICATED_FULLY] }
