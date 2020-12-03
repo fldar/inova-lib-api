@@ -1,0 +1,15 @@
+image: php:7.4-fpm-alpine
+
+cache:
+  paths:
+    - vendor/
+    - ~/.composer/cache/files
+
+before_script:
+  - apk add --no-cache $PHPIZE_DEPS && pecl install xdebug && docker-php-ext-enable xdebug
+  - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+  - composer install -n
+
+phpcs:
+  script:
+    - ./vendor/bin/phpcs src/ --standard=PSR12 -p --ignore=*/Migrations/*
