@@ -16,7 +16,8 @@ security:
         main:
             anonymous: false
             lazy: true
-            provider: app_user_provider
+            json_login:
+                check_path: /login
 
     access_control:
         - { path: '/', roles: [ROLE_ADMIN, IS_AUTHENTICATED_FULLY] }
