@@ -17,5 +17,5 @@
 - php bin/console doctrine:migrations:migrate --env=dev
 
 ##### Create Migration
-- php bin/console make:migrations
+- php bin/console make:migration
 - php bin/console doctrine:migrations:migrate --env=dev
