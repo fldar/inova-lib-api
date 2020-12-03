@@ -42,8 +42,7 @@ class SecurityController extends AbstractController
      * @Route("/check", name="check", methods={"GET"})
      * @return JsonResponse
      */
-    public function teste(): JsonResponse
-    {
+    public function check(): JsonResponse {
         return $this->json(['message' => "Hello!"]);
     }
 }
