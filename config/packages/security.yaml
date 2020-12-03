@@ -19,3 +19,4 @@ security:
             provider: app_user_provider
 
     access_control:
+        - { path: '/', roles: [ROLE_ADMIN, IS_AUTHENTICATED_FULLY] }

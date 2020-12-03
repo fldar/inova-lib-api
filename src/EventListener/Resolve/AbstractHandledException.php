@@ -12,14 +12,15 @@ abstract class AbstractHandledException implements HandledExceptionInterface
 
     /**
      * @param \Throwable $throwable
+     * @param string|null $message
      * @return JsonResponse
      */
-    public function getFinalError(\Throwable $throwable): JsonResponse
+    public function getFinalError(\Throwable $throwable, ?string $message = null): JsonResponse
     {
         $code = $this->getExceptionStringCode($throwable->getFile());
 
         return new JsonResponse([
-            'erro' => self::MENSAGEM,
+            'erro' => $message ?? self::MENSAGEM,
             'code' => $code . $throwable->getLine()
         ], Response::HTTP_BAD_REQUEST);
     }
