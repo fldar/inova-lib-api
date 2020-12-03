@@ -14,8 +14,7 @@ RUN ln -snf /usr/share/zoneinfo/${TIMEZONE} /etc/localtime && echo ${TIMEZONE} >
 && "date"
 
 # Type docker-php-ext-install to see available extensions
-RUN docker-php-ext-install ctype iconv json pdo_pgsql
-
+RUN docker-php-ext-install ctype iconv json pdo_mysql
 
 # install xdebug
 RUN apk add --no-cache $PHPIZE_DEPS && pecl install xdebug && docker-php-ext-enable xdebug
