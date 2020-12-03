@@ -23,3 +23,7 @@
 ##### Make DataFixture
 - php bin/console make:fixtures
 - php bin/console doctrine:fixtures:load
+
+
+##### UniTests
+- php bin/console phpunit --coverage-html reports/

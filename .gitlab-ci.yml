@@ -1,11 +1,20 @@
 image: php:7.4-fpm-alpine
 
+services:
+  - mysql:5.7
+
+variables:
+  MYSQL_DATABASE: apidb
+  MYSQL_ROOT_PASSWORD: docker
+
 cache:
   paths:
     - vendor/
     - ~/.composer/cache/files
 
 before_script:
+  - apk update
+  - docker-php-ext-install pdo_mysql
   - apk add --no-cache $PHPIZE_DEPS && pecl install xdebug && docker-php-ext-enable xdebug
   - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
   - composer install -n
@@ -13,3 +22,11 @@ before_script:
 phpcs:
   script:
     - ./vendor/bin/phpcs src/ --standard=PSR12 -p --ignore=*/Migrations/*
+
+phpunit:
+  script:
+    - bin/console doctrine:database:drop --force --if-exists --env=test
+    - bin/console doctrine:database:create --env=test
+    - bin/console doctrine:migrations:migrate --no-interaction --env=test
+    - bin/console doctrine:fixtures:load --env=test
+    - bin/phpunit --coverage-text --colors=never --coverage-clover=coverage.xml
