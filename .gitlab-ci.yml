@@ -6,7 +6,6 @@ services:
 variables:
   MYSQL_DATABASE: apidb_test
   MYSQL_ROOT_PASSWORD: docker
-  DATABASE_URL: 'mysql://root:docker@mysql:3306/apidb_test?serverVersion=5.7'
 
 cache:
   paths:
@@ -26,8 +25,8 @@ phpcs:
 
 phpunit:
   script:
-    - bin/console doctrine:database:drop --force --if-exists --env=test
-    - bin/console doctrine:database:create --env=test
-    - bin/console doctrine:migrations:migrate --no-interaction --env=test
-    - bin/console doctrine:fixtures:load --env=test
+    - bin/console doctrine:database:drop --force --if-exists --env=gitlab
+    - bin/console doctrine:database:create --env=gitlab
+    - bin/console doctrine:migrations:migrate --no-interaction --env=gitlab
+    - bin/console doctrine:fixtures:load --env=gitlab
     - bin/phpunit --coverage-text --colors=never --coverage-clover=coverage.xml

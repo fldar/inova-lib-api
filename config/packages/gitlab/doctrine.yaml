@@ -3,15 +3,14 @@ doctrine:
     default_connection: default
     connections:
       default:
-        driver: '%database_driver%'
-        server_version: '%database_version%'
-        user: '%database_user%'
-        password: '%database_password%'
-        host: '%database_host%'
-        port: '%database_port%'
-        dbname: '%database_dbname%'
+        driver: 'pdo_mysql'
+        server_version: '5.7'
+        user: 'root'
+        password: 'docker'
+        host: 'mysql'
+        dbname: 'apidb_test'
   orm:
-    auto_generate_proxy_classes: true
+    auto_generte_proxy_classes: true
     naming_strategy: doctrine.orm.naming_strategy.underscore
     auto_mapping: true
     mappings:
