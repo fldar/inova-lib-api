@@ -6,6 +6,7 @@ services:
 variables:
   MYSQL_DATABASE: apidb_test
   MYSQL_ROOT_PASSWORD: docker
+  DATABASE_URL: 'mysql://root:docker@mysql:3306/apidb_test?serverVersion=5.7'
 
 cache:
   paths:
