@@ -1,7 +1,7 @@
 parameters:
   database_driver: pdo_mysql
   database_version: 5.7
-  database_user: docker
+  database_user: root
   database_password: docker
   database_host: mysql
   database_port: '3306'
