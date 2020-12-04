@@ -1,8 +1,2 @@
 parameters:
-  database_driver: pdo_mysql
-  database_version: 5.7
-  database_user: root
-  database_password: docker
-  database_host: mysql
-  database_port: '3306'
-  database_dbname: apidb_test
+  database_url: 'mysql://db_user:db_password@mysql:3306/apidb_test?serverVersion=5.7'

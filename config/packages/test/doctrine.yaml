@@ -3,13 +3,7 @@ doctrine:
     default_connection: default
     connections:
       default:
-        driver: '%database_driver%'
-        server_version: '%database_version%'
-        user: '%database_user%'
-        password: '%database_password%'
-        host: '%database_host%'
-        port: '%database_port%'
-        dbname: '%database_dbname%'
+        url: '%database_url%'
   orm:
     auto_generate_proxy_classes: true
     naming_strategy: doctrine.orm.naming_strategy.underscore
