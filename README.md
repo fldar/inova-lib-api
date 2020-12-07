@@ -27,3 +27,4 @@
 
 ##### UniTests
 - php bin/phpunit --coverage-html reports/
+- php bin/phpunit --coverage-text
