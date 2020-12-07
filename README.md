@@ -26,4 +26,4 @@
 
 
 ##### UniTests
-- php bin/console phpunit --coverage-html reports/
+- php bin/phpunit --coverage-html reports/
