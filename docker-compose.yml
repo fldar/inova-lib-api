@@ -2,10 +2,10 @@ version: '3.7'
 services:
   db:
     build: .docker/mysql
-    container_name: 'apidb'
+    container_name: api-db
     restart: 'always'
     ports:
-      - "3350:3306"
+      - "3306:3306"
     volumes:
       - $DB_VOLUME:/var/lib/mysql
     environment:
@@ -16,19 +16,19 @@ services:
       context: .docker/php-fpm
       args:
         TIMEZONE: $TIMEZONE
-    container_name: apiphp
+    container_name: api-php
     volumes:
-      - ../api:$PROJECT_DIR:cached
-      - .docker/logs/symfony:$PROJECT_DIR/var/log:cached
+      - ../api:$PROJECT_DIR
+      - .docker/logs/symfony:$PROJECT_DIR/var/log
     links:
       - db
   nginx:
     build: .docker/nginx
-    container_name: apinginx
+    container_name: api-ws
     ports:
-      - 8051:80
+      - 80:80
     links:
       - php
     volumes:
-      - .docker/logs/nginx:/var/log/nginx:cached
-      - ../api:$PROJECT_DIR:cached
+      - .docker/logs/nginx:/var/log/nginx
+      - ../api:$PROJECT_DIR

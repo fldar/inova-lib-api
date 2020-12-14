@@ -5,11 +5,11 @@
 - do the same in '.docker/php-fpm/Dockerfile' 'WORKDIR'
 - run `docker-compose build`
 - run `docker-compose up -d`
-- run `docker-compose exec T php composer install`
+- run `docker-compose exec T api-php composer install`
 - open `localhost:8051`
 
 ##### Run bash in Container
-- docker exec -it apiphp /bin/sh
+- docker exec -it api-php /bin/sh
 
 ##### Config DB
 - php bin/console doctrine:database:drop --force --if-exists --env=dev
