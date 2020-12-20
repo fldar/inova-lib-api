@@ -8,7 +8,6 @@ security:
         app_user_provider:
             entity:
                 class: App\Entity\User
-                property: email
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -16,6 +15,9 @@ security:
         main:
             anonymous: false
             lazy: true
+            guard:
+                authenticators:
+                    - App\Security\LoginAuthenticator
             json_login:
                 check_path: /login
             logout:

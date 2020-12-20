@@ -14,7 +14,7 @@ class ExceptionListener
      */
     public function onKernelException(ExceptionEvent $event): void
     {
-        $exception = $event->getThrowable()->getPrevious();
+        $exception = $event->getThrowable();
 
         switch ($exception) {
             case $exception instanceof InsufficientAuthenticationException:
