@@ -4,7 +4,8 @@ namespace App\EventListener;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
-use App\EventListener\Resolve\{HandledException, HandleAccessDeniedException};
+use App\EventListener\Resolve\{HandledException, AccessDeniedException, RoutingException};
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Security\Core\Exception\InsufficientAuthenticationException;
 
 class ExceptionListener
@@ -15,12 +16,16 @@ class ExceptionListener
     public function onKernelException(ExceptionEvent $event): void
     {
         $exception = $event->getThrowable();
+        $previous = $exception->getPrevious() ?? $exception; 
 
-        switch ($exception) {
-            case $exception instanceof InsufficientAuthenticationException:
-                $json = (new HandleAccessDeniedException())->getFinalError($exception);
+        switch ($previous) {
+            case $previous instanceof ResourceNotFoundException:
+                $json = (new RoutingException())->getFinalError($exception);
                 break;
-            case $exception instanceof \Throwable:
+            case $previous instanceof InsufficientAuthenticationException:
+                $json = (new AccessDeniedException())->getFinalError($exception);
+                break;
+            case $previous instanceof \Throwable:
                 $json = (new HandledException())->getFinalError($exception);
                 break;
             default:
