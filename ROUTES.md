@@ -1,4 +1,5 @@
 ## Routes
+##### Login
 ```
 POST https://localhost/login/
 {
@@ -6,3 +7,8 @@ POST https://localhost/login/
     "password":"password"
 }
 ```
+##### Logout
+```
+GET https://localhost/logout/
+```
+

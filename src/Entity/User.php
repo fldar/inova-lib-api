@@ -19,6 +19,11 @@ class User implements UserInterface
     private int $id;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private string $name;
+
+    /**
      * @ORM\Column(type="string", length=55, unique=true)
      */
     private string $username;
@@ -44,6 +49,22 @@ class User implements UserInterface
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param string $name
+     */
+    public function setName(string $name): void
+    {
+        $this->name = $name;
     }
 
     /**

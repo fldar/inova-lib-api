@@ -21,8 +21,9 @@ security:
             json_login:
                 check_path: /login
             logout:
-                path: api_logout
+                path: logout
                 target: logouted
 
     access_control:
-        - { path: '/check', roles: [ROLE_ADMIN, IS_AUTHENTICATED_FULLY] }
+        - { path: '^/check', roles: [ROLE_ADMIN, IS_AUTHENTICATED_FULLY] }
+        - { path: '/login', roles: [] }

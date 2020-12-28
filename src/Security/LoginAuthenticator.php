@@ -143,6 +143,6 @@ class LoginAuthenticator extends AbstractFormLoginAuthenticator implements Passw
      */
     protected function getLoginUrl(): string
     {
-        return $this->urlGenerator->generate('login');
+        return $this->urlGenerator->generate('unauthorized');
     }
 }
