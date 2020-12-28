@@ -3,25 +3,25 @@
 namespace App\Controller;
 
 use Symfony\Component\Routing\Annotation\Route;
+use App\Exception\AuthenticationRequiredException;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class SecurityController extends AbstractController
 {
     /** @var string  */
     public const
-        UNATHORIZED    = 'Please login to continue.',
         LOGIN_SUCCESS  = 'Welcome %s',
         LOGOUT_SUCCESS = 'Good By!'
     ;
 
     /**
      * @Route("/unauthorized", name="unauthorized", methods={"GET"})
-     * @return JsonResponse
      */
-    public function unauthorized(): JsonResponse
+    public function unauthorized(): void
     {
-        return $this->json(['message' => self::UNATHORIZED]);
+        throw new AuthenticationRequiredException();
     }
 
     /**
@@ -52,6 +52,7 @@ class SecurityController extends AbstractController
     }
 
     /**
+     * @IsGranted("IS_AUTHENTICATED_FULLY")
      * @Route("/check", name="check", methods={"GET"})
      * @return JsonResponse
      */
