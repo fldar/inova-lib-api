@@ -16,7 +16,7 @@ class ExceptionListener
     public function onKernelException(ExceptionEvent $event): void
     {
         $exception = $event->getThrowable();
-        $previous = $exception->getPrevious() ?? $exception; 
+        $previous = $exception->getPrevious() ?? $exception;
 
         switch ($previous) {
             case $previous instanceof ResourceNotFoundException:
