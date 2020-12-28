@@ -28,3 +28,6 @@
 ##### UniTests
 - php bin/phpunit --coverage-html reports/
 - php bin/phpunit --coverage-text
+
+##### PSR12
+- ./vendor/bin/phpcs src/ --standard=PSR12 -p --ignore=*/Migrations/*
