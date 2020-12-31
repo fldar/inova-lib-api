@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Exception\AuthenticationRequiredException;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -30,6 +31,7 @@ class SecurityController extends AbstractController
      */
     public function login(): JsonResponse
     {
+        /** @var User $user */
         $user = $this->getUser();
 
         return $this->json(['message' => sprintf(self::LOGIN_SUCCESS, $user->getName())]);
