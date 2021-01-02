@@ -23,3 +23,8 @@ security:
             logout:
                 path: logout
                 target: logouted
+    role_hierarchy:
+        # USER
+        ROLE_USER_READ: ROLE_USER
+        ROLE_USER_WRITE: ROLE_USER_READ
+        ROLE_USER_ADMIN: ROLE_USER_WRITE
