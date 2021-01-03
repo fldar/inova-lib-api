@@ -4,6 +4,7 @@ namespace App\Service;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class UserService
 {
@@ -18,10 +19,10 @@ class UserService
     }
 
     /**
-     * @return User[]
+     * @return ArrayCollection
      */
-    public function getAllUser(): array
+    public function getAllUser(): ArrayCollection
     {
-        return $this->userRepository->findAll();
+        return new ArrayCollection($this->userRepository->findAll());
     }
 }

@@ -1,4 +1,4 @@
-## Routes
+## Auth
 ##### Login
 ```
 POST https://localhost/login/
@@ -12,3 +12,10 @@ POST https://localhost/login/
 GET https://localhost/logout/
 ```
 
+-----------------------------------------------------------------
+
+## User
+##### List
+```
+GET https://localhost/user/list
+```
