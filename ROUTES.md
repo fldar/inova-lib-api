@@ -19,3 +19,13 @@ GET https://localhost/logout/
 ```
 GET https://localhost/user/list
 ```
+#### Create
+```
+POST https://localhost/user/create
+{
+    "name":"Test Name",
+    "email":"test@mail.com",
+    "username":"test",
+    "password":"xab123"
+}
+```

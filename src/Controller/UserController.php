@@ -6,15 +6,17 @@ use App\Service\UserService;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\{JsonResponse, Request};
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @IsGranted("ROLE_USER_READ")
  * @package App\Controller
  * @Route("/user")
  */
-class UserController extends AbstractController
+class UserController extends ApiAbstractController
 {
+    /** @var string */
+    private const CREATED_SUCCESS = 'The user %s was successfully created';
+
     private UserService $userService;
 
     /**
@@ -39,9 +41,14 @@ class UserController extends AbstractController
      * @Route("/create", name="user_create", methods={"POST"})
      * @return JsonResponse
      */
-    public function createUser(): JsonResponse
+    public function createUser(Request $request): JsonResponse
     {
-        return $this->json(["bla"]);
+        $request = $this->getRequestContent($request);
+        $user = $this->userService->createUser($request);
+
+        return $this->json([
+            "message" => sprintf(self::CREATED_SUCCESS, $user->getName())
+        ]);
     }
 
     /**
