@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -42,6 +43,26 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private string $password;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updatedAt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $deletedAt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class)
+     */
+    private $changer;
 
     /**
      * @return int|null
@@ -158,5 +179,80 @@ class User implements UserInterface
      */
     public function eraseCredentials()
     {
+    }
+
+    /**
+     * @return \DateTimeInterface|null
+     */
+    public function getDeletedAt(): ?\DateTimeInterface
+    {
+        return $this->deletedAt;
+    }
+
+    /**
+     * @param \DateTimeInterface|null $deletedAt
+     * @return $this
+     */
+    public function setDeletedAt(?\DateTimeInterface $deletedAt): self
+    {
+        $this->deletedAt = $deletedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTimeInterface|null
+     */
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @return $this
+     */
+    public function setCreatedAt(): self
+    {
+        $this->createdAt = Carbon::now();
+
+        return $this;
+    }
+
+    /**
+     * @return \DateTimeInterface|null
+     */
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param \DateTimeInterface|null $updated_at
+     * @return $this
+     */
+    public function setUpdatedAt(?\DateTimeInterface $updated_at): self
+    {
+        $this->updatedAt = $updated_at;
+
+        return $this;
+    }
+
+    /**
+     * @return $this|null
+     */
+    public function getChanger(): ?self
+    {
+        return $this->changer;
+    }
+
+    /**
+     * @param User|null $changer
+     * @return $this
+     */
+    public function setChanger(?self $changer): self
+    {
+        $this->changer = $changer;
+
+        return $this;
     }
 }

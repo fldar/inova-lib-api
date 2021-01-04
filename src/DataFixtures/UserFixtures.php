@@ -32,6 +32,7 @@ class UserFixtures extends Fixture
         $user->setEmail('root@mail.com');
         $user->setRoles(['ROLE_USER_ADMIN']);
         $user->setPassword($password);
+        $user->setCreatedAt();
         $manager->persist($user);
         $manager->flush();
     }
