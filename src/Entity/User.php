@@ -60,9 +60,9 @@ class User implements UserInterface
     private $deletedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=User::class)
+     * @ORM\Column(type="string", length=55, nullable=true)
      */
-    private $changer;
+    private $updatedBy;
 
     /**
      * @return int|null
@@ -83,9 +83,11 @@ class User implements UserInterface
     /**
      * @param string $name
      */
-    public function setName(string $name): void
+    public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -238,20 +240,20 @@ class User implements UserInterface
     }
 
     /**
-     * @return $this|null
+     * @return string|null
      */
-    public function getChanger(): ?self
+    public function getUpdatedBy(): ?string
     {
-        return $this->changer;
+        return $this->updatedBy;
     }
 
     /**
-     * @param User|null $changer
+     * @param string|null $updatedBy
      * @return $this
      */
-    public function setChanger(?self $changer): self
+    public function setUpdatedBy(?string $updatedBy): self
     {
-        $this->changer = $changer;
+        $this->updatedBy = $updatedBy;
 
         return $this;
     }
