@@ -14,8 +14,10 @@ class ApiAbstractController extends AbstractController
      */
     public function getRequestContent(Request $request): ArrayCollection
     {
-        return new ArrayCollection(
-            json_decode($request->getContent(), true)
-        );
+        $user = $this->getUser();
+        $requestContent = json_decode($request->getContent(), true);
+        $requestContent['user_logged'] = $user->getUsername() ?? null;
+
+        return new ArrayCollection($requestContent);
     }
 }

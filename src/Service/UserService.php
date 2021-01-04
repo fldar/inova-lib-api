@@ -14,6 +14,7 @@ class UserService
 
     /**
      * @param UserRepository $userRepository
+     * @param UserPasswordEncoderInterface $passwordEncoder
      */
     public function __construct(
         UserRepository $userRepository,
@@ -39,15 +40,28 @@ class UserService
     {
         $user = new User();
 
-        $password = $this->passwordEncoder
-            ->encodePassword($user, $data->get('password'))
+        $user->setName($data->get('name'))
+            ->setEmail($data->get('email'))
+            ->setUsername($data->get('username'))
+            ->setCreatedAt()
+            ->setUpdatedBy($data->get('user_logged'))
+            ->setPassword($this->getEncondePassword($user, $data))
         ;
 
-        $user->setName($data->get('name'));
-        $user->setEmail($data->get('email'));
-        $user->setUsername($data->get('username'));
-        $user->setPassword($password);
-
         return $this->userRepository->createUser($user);
+    }
+
+    /**
+     * @param User $user
+     * @param ArrayCollection $data
+     * @return string
+     */
+    private function getEncondePassword(User $user, ArrayCollection $data): string
+    {
+        return $this->passwordEncoder->encodePassword($user, $data->get('password'));
+    }
+
+    public function deleteUser(int $id)
+    {
     }
 }
