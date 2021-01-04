@@ -22,6 +22,9 @@ class ExceptionListener
     {
         $exception = $event->getThrowable();
         $previous = $exception->getPrevious() ?? $exception;
+        
+        
+        dd($exception);
 
         switch ($previous) {
             case $previous instanceof ResourceNotFoundException:
