@@ -96,6 +96,9 @@
     "egulias/email-validator": {
         "version": "2.1.22"
     },
+    "friendsofphp/proxy-manager-lts": {
+        "version": "v1.0.1"
+    },
     "laminas/laminas-code": {
         "version": "3.4.1"
     },
@@ -107,6 +110,9 @@
     },
     "monolog/monolog": {
         "version": "2.1.1"
+    },
+    "nesbot/carbon": {
+        "version": "2.43.0"
     },
     "nikic/php-parser": {
         "version": "v4.10.2"
