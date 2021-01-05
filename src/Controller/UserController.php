@@ -15,7 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class UserController extends ApiAbstractController
 {
     /** @var string */
-    private const 
+    private const
         CREATED_SUCCESS = 'The user %s was successfully created',
         DELETED_SUCCESS = 'The user was successfully deleted'
     ;
