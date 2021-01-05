@@ -40,3 +40,7 @@ POST https://localhost/user/set-roles
     ]
 }
 ```
+#### Delete
+```
+GET https://localhost/user/delete/{id}
+```
