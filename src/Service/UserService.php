@@ -2,9 +2,9 @@
 
 namespace App\Service;
 
+use Carbon\Carbon;
 use App\Entity\User;
 use App\Repository\UserRepository;
-use Carbon\Carbon;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Common\Collections\ArrayCollection;
 use App\Traits\Validators\UserValues as UserValuesValidators;
