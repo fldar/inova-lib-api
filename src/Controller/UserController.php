@@ -16,11 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class UserController extends ApiAbstractController
 {
     /** @var string */
-    private const
-        CREATED_SUCCESS = 'The user %s was successfully created',
-        UPDATED_SUCCESS = 'The user %s was successfully updated',
-        DELETED_SUCCESS = 'The user %s was successfully deleted'
-    ;
+    private const MESSAGE_SUCCESS = 'The user %s was successfully %s';
 
     private UserService $userService;
 
@@ -51,7 +47,7 @@ class UserController extends ApiAbstractController
         $request = $this->getRequestContent($request);
         $user = $this->userService->createUser($request);
 
-        return $this->json(["message" => sprintf(self::CREATED_SUCCESS, $user->getUsername())]);
+        return $this->json(["message" => sprintf(self::MESSAGE_SUCCESS, $user->getUsername(), 'created')]);
     }
 
     /**
@@ -67,7 +63,7 @@ class UserController extends ApiAbstractController
         $request = $this->getRequestContent($request);
         $user = $this->userService->deleteUser($id, $request);
 
-        return $this->json(["message" => sprintf(self::DELETED_SUCCESS, $user->getUsername())]);
+        return $this->json(["message" => sprintf(self::MESSAGE_SUCCESS, $user->getUsername(), 'deleted')]);
     }
 
     /**
@@ -82,6 +78,6 @@ class UserController extends ApiAbstractController
         $request = $this->getRequestContent($request);
         $user = $this->userService->setUserRoles($request);
 
-        return $this->json(["message" => sprintf(self::UPDATED_SUCCESS, $user->getUsername())]);
+        return $this->json(["message" => sprintf(self::MESSAGE_SUCCESS, $user->getUsername(), 'updated')]);
     }
 }
