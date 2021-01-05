@@ -17,6 +17,7 @@ class UserController extends ApiAbstractController
     /** @var string */
     private const
         CREATED_SUCCESS = 'The user %s was successfully created',
+        UPDATED_SUCCESS = 'The user %s was successfully updated',
         DELETED_SUCCESS = 'The user was successfully deleted'
     ;
 
@@ -65,5 +66,20 @@ class UserController extends ApiAbstractController
         $this->userService->deleteUser($id, $request);
 
         return $this->json(["message" => self::DELETED_SUCCESS]);
+    }
+
+    /**
+     * @IsGranted("ROLE_USER_ADMIN")
+     * @Route("/set-roles", name="user_set_roles", methods={"POST"})
+     * @param Request $request
+     * @return JsonResponse
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function setRoles(Request $request): JsonResponse
+    {
+        $request = $this->getRequestContent($request);
+        $user = $this->userService->setUserRoles($request);
+
+        return $this->json(["message" => sprintf(self::UPDATED_SUCCESS, $user->getName())]);
     }
 }
