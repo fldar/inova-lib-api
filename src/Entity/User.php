@@ -55,7 +55,7 @@ class User implements UserInterface
     private $updatedAt;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", name="deleted_at", nullable=true)
      */
     private $deletedAt;
 

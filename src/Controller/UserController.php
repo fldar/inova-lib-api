@@ -15,7 +15,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class UserController extends ApiAbstractController
 {
     /** @var string */
-    private const CREATED_SUCCESS = 'The user %s was successfully created';
+    private const
+        CREATED_SUCCESS = 'The user %s was successfully created',
+        DELETED_SUCCESS = 'The user was successfully deleted'
+    ;
 
     private UserService $userService;
 
@@ -53,11 +56,14 @@ class UserController extends ApiAbstractController
 
     /**
      * @IsGranted("ROLE_USER_ADMIN")
-     * @Route("/delete", name="user_delete", methods={"POST"})
+     * @Route("/delete/id/{id}", name="user_delete", methods={"GET"})
      * @return JsonResponse
      */
-    public function deleteUser(): JsonResponse
+    public function deleteUser(Request $request, int $id): JsonResponse
     {
-        return $this->json(["bla"]);
+        $request = $this->getRequestContent($request);
+        $this->userService->deleteUser($id, $request);
+
+        return $this->json(["message" => self::DELETED_SUCCESS]);
     }
 }

@@ -61,7 +61,15 @@ class UserService
         return $this->passwordEncoder->encodePassword($user, $data->get('password'));
     }
 
-    public function deleteUser(int $id)
+    /**
+     * @param int|null $id
+     * @param ArrayCollection $request
+     * @return int
+     */
+    public function deleteUser(?int $id, ArrayCollection $request): int
     {
+        $user = $this->userRepository->findById($id);
+        dd($user);
+//        $this->userRepository->deleteUser($id);
     }
 }
