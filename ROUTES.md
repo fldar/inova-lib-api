@@ -29,3 +29,14 @@ POST https://localhost/user/create
     "password":"xab123"
 }
 ```
+#### Set Roles
+```
+POST https://localhost/user/set-roles
+{
+    "id":"1",
+    "roles":[
+        "ROLE_USER_ADMIN",
+        "ROLE_ANOTHER_READ"
+    ]
+}
+```
