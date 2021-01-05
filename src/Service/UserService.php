@@ -79,13 +79,20 @@ class UserService
     /**
      * @param int|null $id
      * @param ArrayCollection $request
-     * @return int
+     * @return User|null
+     * @throws NonUniqueResultException
      */
-    public function deleteUser(?int $id, ArrayCollection $request): int
+    public function deleteUser(?int $id, ArrayCollection $request): ?User
     {
-        $user = $this->userRepository->findById($id);
-        dd($user);
-//        $this->userRepository->deleteUser($id);
+        $user = $this->getById($id);
+
+        $this->validUserEntity($user);
+
+        $user->setDeletedAt(Carbon::now());
+        $user->setUpdatedBy($request->get('user_logged'));
+        $this->userRepository->saveUser($user);
+
+        return $user;
     }
 
     /**

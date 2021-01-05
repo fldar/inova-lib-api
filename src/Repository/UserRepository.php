@@ -56,6 +56,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return $this->createQueryBuilder('u')
             ->where('u.email = :username')
             ->orWhere('u.username = :username')
+            ->andWhere('u.deletedAt IS NULL')
             ->setParameter('username', $username)
             ->getQuery()
             ->getOneOrNullResult()
@@ -69,6 +70,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     {
         return $this->createQueryBuilder('u')
             ->select('u.id', 'u.name', 'u.email', 'u.username', 'u.roles')
+            ->where('u.deletedAt IS NULL')
             ->getQuery()
             ->getResult()
         ;
