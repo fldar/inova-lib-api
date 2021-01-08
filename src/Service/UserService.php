@@ -40,10 +40,15 @@ class UserService
     /**
      * @param ArrayCollection $data
      * @return User
+     * @throws NonUniqueResultException
      */
     public function createUser(ArrayCollection $data): User
     {
         $user = new User();
+
+        $this->validName($data->get('name'));
+        $this->validEmail($data->get('email'));
+        $this->validUserName($data->get('username'));
 
         $user->setName($data->get('name'))
             ->setEmail($data->get('email'))

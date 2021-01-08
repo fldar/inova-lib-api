@@ -109,4 +109,42 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getOneOrNullResult()
         ;
     }
+
+    /**
+     * @param string $email
+     * @return int|null
+     * @throws NonUniqueResultException
+     */
+    public function findIdByEmail(string $email): ?int
+    {
+        $result = $this->createQueryBuilder('u')
+            ->select('u.id')
+            ->where('u.email = :email')
+            ->andWhere('u.deletedAt IS NULL')
+            ->setParameter('email', $email)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+        return $result ? $result['id'] : null;
+    }
+
+    /**
+     * @param string $username
+     * @return int|null
+     * @throws NonUniqueResultException
+     */
+    public function findIdByUsername(string $username): ?int
+    {
+        $result = $this->createQueryBuilder('u')
+            ->select('u.id')
+            ->where('u.username = :username')
+            ->andWhere('u.deletedAt IS NULL')
+            ->setParameter('username', $username)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+        return $result ? $result['id'] : null;
+    }
 }
