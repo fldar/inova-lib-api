@@ -6,8 +6,8 @@ use Carbon\Carbon;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use App\Traits\Validators\UserValuesValidators;
 use Doctrine\Common\Collections\ArrayCollection;
-use App\Traits\Validators\UserValues as UserValuesValidators;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserService

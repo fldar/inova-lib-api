@@ -2,8 +2,8 @@
 
 namespace App\Controller;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ApiAbstractController extends AbstractController
@@ -16,7 +16,11 @@ class ApiAbstractController extends AbstractController
     {
         $user = $this->getUser();
         $requestContent = json_decode($request->getContent(), true);
-        $requestContent['user_logged'] = $user->getUsername() ?? null;
+        $requestContent['user_logged'] = null;
+
+        if ($user && $user->getUsername()) {
+            $requestContent['user_logged'] = $user->getUsername();
+        }
 
         return new ArrayCollection($requestContent);
     }
