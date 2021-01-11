@@ -59,9 +59,12 @@ class RecoverPasswordService
     private function hashFactory(User $user): UserRecover
     {
         $userHash = new UserRecover();
-        $userHash->setHash($this->hashGen($user));
-        $userHash->setCreatedAt(Carbon::now());
-        $userHash->setUser($user);
+
+        $userHash
+            ->setHash($this->hashGen($user))
+            ->setCreatedAt(Carbon::now())
+            ->setUser($user)
+        ;
 
         return $userHash;
     }
