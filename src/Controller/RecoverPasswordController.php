@@ -33,8 +33,11 @@ class RecoverPasswordController extends ApiAbstractController
     public function sendRequestRecover(Request $request): JsonResponse
     {
         $request = $this->getRequestContent($request);
-        $this->service->sendRequestRecover($request);
+        $hash = $this->service->sendRequestRecover($request);
 
-        return $this->json(['message' => self::MESSAGE_SUCCESS]);
+        return $this->json([
+            'message' => self::MESSAGE_SUCCESS,
+            'hash' => $hash->getHash()
+        ]);
     }
 }
