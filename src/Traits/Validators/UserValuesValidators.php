@@ -5,7 +5,7 @@ namespace App\Traits\Validators;
 use App\Entity\User;
 use App\Repository\UserRepository;
 
-trait UserValues
+trait UserValuesValidators
 {
     private UserRepository $userRepository;
 
@@ -39,15 +39,18 @@ trait UserValues
 
     /**
      * @param string|null $username
+     * @param bool|null $validUniq
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function validUserName(?string $username): void
+    public function validUserName(?string $username, ?bool $validUniq = true): void
     {
         if (!$username) {
             throw new \DomainException('username required.');
         }
 
-        $this->validUsernameAvailable($username);
+        if ($validUniq) {
+            $this->validUsernameAvailable($username);
+        }
     }
 
     /**
