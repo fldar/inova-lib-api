@@ -44,6 +44,7 @@ class RecoverPasswordService
         $user = $this->userRepository->loadUserByUsername($username);
 
         $this->validUserEntity($user);
+        $this->invalidOldHashes($user);
 
         $userHash = $this->hashFactory($user);
 
@@ -78,7 +79,18 @@ class RecoverPasswordService
         return md5(
             Carbon::now()->format('YmdHi') .
             $user->getUsername() .
-            $user->getCreatedAt()->format('YmdHi')
+            uniqid()
         );
+    }
+
+    /**
+     * @param User $user
+     * @return int|null
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    private function invalidOldHashes(User $user): ?int
+    {
+        return $this->userRecoverRepository->useUserHashes($user);
     }
 }
