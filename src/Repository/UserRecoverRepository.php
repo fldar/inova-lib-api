@@ -2,6 +2,8 @@
 
 namespace App\Repository;
 
+use Carbon\Carbon;
+use App\Entity\User;
 use App\Entity\UserRecover;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -36,5 +38,25 @@ class UserRecoverRepository extends ServiceEntityRepository
         $entityManager->flush();
 
         return $hash;
+    }
+
+    /**
+     * @param User $user
+     * @return int|null
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function useUserHashes(User $user): ?int
+    {
+        return $this->getEntityManager()
+            ->createQueryBuilder()
+            ->update('App\Entity\UserRecover', 'h')
+            ->set('h.usedAt', '?0')
+            ->where('h.user = :user')
+            ->setParameter(0, Carbon::now())
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
     }
 }

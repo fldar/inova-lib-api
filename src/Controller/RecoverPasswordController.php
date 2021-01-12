@@ -28,16 +28,17 @@ class RecoverPasswordController extends ApiAbstractController
 
     /**
      * @Route("/send", name="send_password_recover", methods={"POST"})
+     * @param Request $request
      * @return JsonResponse
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
     public function sendRequestRecover(Request $request): JsonResponse
     {
         $request = $this->getRequestContent($request);
-        $hash = $this->service->sendRequestRecover($request);
+        $this->service->sendRequestRecover($request);
 
-        return $this->json([
-            'message' => self::MESSAGE_SUCCESS,
-            'hash' => $hash->getHash()
-        ]);
+        return $this->json(['message' => self::MESSAGE_SUCCESS]);
     }
 }
