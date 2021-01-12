@@ -80,4 +80,19 @@ class UserController extends ApiAbstractController
 
         return $this->json(["message" => sprintf(self::MESSAGE_SUCCESS, $user->getUsername(), 'updated')]);
     }
+
+    /**
+     * @IsGranted("ROLE_USER_WRITE")
+     * @Route("/update/id/{id}", name="user_update", methods={"POST"})
+     * @param Request $request
+     * @param int $id
+     * @return JsonResponse
+     */
+    public function updateUser(Request $request, int $id): JsonResponse
+    {
+        $request = $this->getRequestContent($request);
+        $user = $this->userService->updateUser($id, $request);
+
+        return $this->json(["message" => sprintf(self::MESSAGE_SUCCESS, $user->getUsername(), 'updated')]);
+    }
 }

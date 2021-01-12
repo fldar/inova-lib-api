@@ -29,6 +29,13 @@ POST https://localhost/user/create
     "password":"xab123"
 }
 ```
+#### Update
+```
+POST https://localhost/user/update/id/{id}
+{
+    <fields to update>
+}
+```
 #### Set Roles
 ```
 POST https://localhost/user/set-roles
