@@ -116,4 +116,34 @@ class UserService
 
         return $user;
     }
+
+    /**
+     * @param ArrayCollection $data
+     * @return User
+     */
+    public function updateUser(int $id, ArrayCollection $data): User
+    {
+        /** @var User */
+        $user = $this->userRepository->findById($id);
+
+        $this->validUserEntity($user);
+
+        if ($data->get('email')) {
+            $email = $data->get('email');
+
+            $this->validEmailAvailable($email);
+            $user->setEmail($data->get('email'));
+        }
+
+        if ($data->get('name')) {
+            $user->setName($data->get('name'));
+        }
+
+        $user->setUpdatedAt(Carbon::now());
+        $user->setUpdatedBy($data->get('user_logged'));
+
+        $this->userRepository->saveUser($user);
+
+        return $user;
+    }
 }
