@@ -8,25 +8,30 @@ use App\Entity\UserRecover;
 use App\Repository\UserRecoverRepository;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use App\Traits\Validators\UserValuesValidators;
+use App\Traits\Validators\{UserValuesValidators, UserRecoverValuesValidators};
 
 class RecoverPasswordService
 {
     use UserValuesValidators;
+    use UserRecoverValuesValidators;
 
-    private UserRepository $userService;
+    private UserRepository $userRepository;
     private UserRecoverRepository $userRecoverRepository;
+    private UserService $userService;
 
     /**
      * @param UserRepository $userRepository
      * @param UserRecoverRepository $userRecoverRepository
+     * @param UserService $userService
      */
     public function __construct(
         UserRepository $userRepository,
-        UserRecoverRepository $userRecoverRepository
+        UserRecoverRepository $userRecoverRepository,
+        UserService $userService
     ) {
         $this->userRepository = $userRepository;
         $this->userRecoverRepository = $userRecoverRepository;
+        $this->userService = $userService;
     }
 
     /**
@@ -92,5 +97,25 @@ class RecoverPasswordService
     private function invalidOldHashes(User $user): ?int
     {
         return $this->userRecoverRepository->useUserHashes($user);
+    }
+
+    /**
+     * @param string $token
+     * @param ArrayCollection $data
+     */
+    public function changePassword(string $token, ArrayCollection $data): void
+    {
+        $userRecover = $this->userRecoverRepository->findByHash($token);
+
+        $this->validUserRecoverEntity($userRecover);
+        $this->validPassword($data->get('password'));
+
+        $user = $userRecover->getUser();
+        $password = $this->userService->getEncondePassword($user, $data);
+
+        $user->setPassword($password);
+
+        $this->userRepository->saveUser($user);
+        $this->invalidOldHashes($user);
     }
 }

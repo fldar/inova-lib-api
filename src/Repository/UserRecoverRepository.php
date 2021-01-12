@@ -53,10 +53,28 @@ class UserRecoverRepository extends ServiceEntityRepository
             ->update('App\Entity\UserRecover', 'h')
             ->set('h.usedAt', '?0')
             ->where('h.user = :user')
+            ->andWhere('h.usedAt IS NULL')
             ->setParameter(0, Carbon::now())
             ->setParameter('user', $user)
             ->getQuery()
             ->getSingleScalarResult()
+        ;
+    }
+
+    /**
+     * @param string $hash
+     * @return UserRecover|null
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function findByHash(string $hash): ?UserRecover
+    {
+        return $this->createQueryBuilder('h')
+            ->join('App\Entity\User', 'u', 'WITH', 'u.id = h.user AND u.deletedAt IS NULL')
+            ->where('h.hash = :hash')
+            ->andWhere('h.usedAt IS NULL')
+            ->setParameter('hash', $hash)
+            ->getQuery()
+            ->getOneOrNullResult()
         ;
     }
 }
