@@ -146,4 +146,22 @@ class UserService
 
         return $user;
     }
+
+    /**
+     * @param User|null $user
+     * @param ArrayCollection $data
+     * @return User|null
+     */
+    public function changePassword(?User $user, ArrayCollection $data): ?User
+    {
+        $this->validUserEntity($user);
+        $this->validPassword($data->get('password'));
+
+        $password = $this->getEncondePassword($user, $data);
+        $user->setPassword($password);
+
+        $this->userRepository->saveUser($user);
+
+        return $user;
+    }
 }

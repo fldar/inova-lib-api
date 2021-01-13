@@ -91,4 +91,14 @@ trait UserValuesValidators
             throw new \DomainException('Email already used.');
         }
     }
+
+    /**
+     * @param string|null $password
+     */
+    public function validPassword(?string $password): void
+    {
+        if (!($password)) {
+            throw new \DomainException('Invalid Password!');
+        }
+    }
 }
