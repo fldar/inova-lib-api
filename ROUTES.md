@@ -36,6 +36,13 @@ POST https://localhost/user/update/id/{id}
     <fields to update>
 }
 ```
+#### Change Password
+```
+POST https://localhost/user/change-password
+{
+    "password":"password"
+}
+```
 #### Set Roles
 ```
 POST https://localhost/user/set-roles
