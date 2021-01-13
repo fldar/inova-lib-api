@@ -66,7 +66,7 @@ class UserService
      * @param ArrayCollection $data
      * @return string
      */
-    private function getEncondePassword(User $user, ArrayCollection $data): string
+    public function getEncondePassword(User $user, ArrayCollection $data): string
     {
         return $this->passwordEncoder->encodePassword($user, $data->get('password'));
     }

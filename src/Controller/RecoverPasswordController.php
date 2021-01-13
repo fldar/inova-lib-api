@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Exception\HashExpiredException;
 use App\Service\RecoverPasswordService;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\{JsonResponse, Request};
@@ -14,7 +15,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class RecoverPasswordController extends ApiAbstractController
 {
     /** @var string */
-    private const MESSAGE_SUCCESS = 'Password change request sent, check your email.';
+    private const
+        MESSAGE_SUCCESS = 'Password change request sent, check your email.',
+        PASSWORD_CHANGED = 'your password has been updated successfully.'
+    ;
 
     private RecoverPasswordService $service;
 
@@ -40,5 +44,35 @@ class RecoverPasswordController extends ApiAbstractController
         $this->service->sendRequestRecover($request);
 
         return $this->json(['message' => self::MESSAGE_SUCCESS]);
+    }
+
+    /**
+     * @Route("/t/{token}", name="recover_change_password", methods={"POST"})
+     * @param Request $request
+     * @param string $token
+     * @return JsonResponse
+     * @throws \Throwable
+     */
+    public function changePassword(Request $request, string $token): JsonResponse
+    {
+        $entityManager = $this->getDoctrine()->getManager('default');
+        $entityManager->getConnection()->beginTransaction();
+
+        try {
+            $request = $this->getRequestContent($request);
+            $this->service->changePassword($token, $request);
+
+            $entityManager->flush();
+            $entityManager->getConnection()->commit();
+
+            return $this->json(['message' => self::PASSWORD_CHANGED]);
+        } catch (HashExpiredException $hashExpiredException) {
+            $entityManager->flush();
+            $entityManager->getConnection()->commit();
+            throw $hashExpiredException;
+        } catch (\Throwable $throwable) {
+            $entityManager->getConnection()->rollback();
+            throw $throwable;
+        }
     }
 }

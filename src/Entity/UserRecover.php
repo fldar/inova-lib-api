@@ -42,7 +42,7 @@ class UserRecover
 
     public function __construct()
     {
-        $this->user = new ArrayCollection();
+        $this->user = null;
     }
 
     /**
@@ -73,9 +73,9 @@ class UserRecover
     }
 
     /**
-     * @return Collection|User[]
+     * @return User|null
      */
-    public function getUser(): Collection
+    public function getUser(): ?User
     {
         return $this->user;
     }

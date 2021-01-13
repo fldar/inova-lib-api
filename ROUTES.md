@@ -51,3 +51,21 @@ POST https://localhost/user/set-roles
 ```
 GET https://localhost/user/delete/{id}
 ```
+
+-----------------------------------------------------------------
+
+## Recover Password
+##### Send
+```
+POST https://localhost/recover-password/send
+{
+    "username":"email@exemple.com" or "username",
+}
+```
+##### Change
+```
+POST https://localhost/recover-password/t/{token}
+{
+    "password":"new_password",
+}
+```
