@@ -108,6 +108,7 @@ class RecoverPasswordService
         $userRecover = $this->userRecoverRepository->findByHash($token);
 
         $this->validUserRecoverEntity($userRecover);
+        $this->validHashExpired($userRecover);
         $this->validPassword($data->get('password'));
 
         $user = $userRecover->getUser();
@@ -117,5 +118,21 @@ class RecoverPasswordService
 
         $this->userRepository->saveUser($user);
         $this->invalidOldHashes($user);
+    }
+
+    /**
+     * @param UserRecover $userRecover
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Throwable
+     */
+    private function validHashExpired(UserRecover $userRecover): void
+    {
+        try {
+            $this->validHash($userRecover);
+        } catch (\Throwable $throwable) {
+            $this->invalidOldHashes($userRecover->getUser());
+            throw $throwable;
+        }
     }
 }

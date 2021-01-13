@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Exception\HashExpiredException;
 use App\Service\RecoverPasswordService;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\{JsonResponse, Request};
@@ -65,6 +66,10 @@ class RecoverPasswordController extends ApiAbstractController
             $entityManager->getConnection()->commit();
 
             return $this->json(['message' => self::PASSWORD_CHANGED]);
+        } catch (HashExpiredException $hashExpiredException) {
+            $entityManager->flush();
+            $entityManager->getConnection()->commit();
+            throw $hashExpiredException;
         } catch (\Throwable $throwable) {
             $entityManager->getConnection()->rollback();
             throw $throwable;
