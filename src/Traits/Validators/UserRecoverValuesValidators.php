@@ -19,16 +19,6 @@ trait UserRecoverValuesValidators
     }
 
     /**
-     * @param string|null $password
-     */
-    public function validPassword(?string $password): void
-    {
-        if (!($password)) {
-            throw new \DomainException('Invalid Password!');
-        }
-    }
-
-    /**
      * @param UserRecover $userRecover
      */
     public function validHash(UserRecover $userRecover)

@@ -95,4 +95,17 @@ class UserController extends ApiAbstractController
 
         return $this->json(["message" => sprintf(self::MESSAGE_SUCCESS, $user->getUsername(), 'updated')]);
     }
+
+    /**
+     * @Route("/change-password", name="user_change_password", methods={"POST"})
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function changePassword(Request $request): JsonResponse
+    {
+        $request = $this->getRequestContent($request);
+        $user = $this->userService->changePassword($this->getUser(), $request);
+
+        return $this->json(['message' => sprintf(self::MESSAGE_SUCCESS, $user->getUsername(), 'changed password')]);
+    }
 }
