@@ -4,6 +4,7 @@ namespace App\EventListener;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
+use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use App\EventListener\Resolve\{
@@ -25,6 +26,7 @@ class ExceptionListener
 
         switch ($previous) {
             case $previous instanceof ResourceNotFoundException:
+            case $previous instanceof MethodNotAllowedException:
                 $json = (new RoutingException())->getFinalError($exception);
                 break;
             case $previous instanceof AccessDeniedException:
