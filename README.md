@@ -1,4 +1,10 @@
 ## API
+##### Instal
+- composer install
+- php bin/console doctrine:database:create --env=dev
+- php bin/console doctrine:migrations:migrate --env=dev
+- php bin/console doctrine:fixtures:load
+
 ##### Instal with docker
 - edit the PROJECT_DIR in .env to you real project dir.
 - do the same in '.docker/nginx/symfony.conf' 'root:'
