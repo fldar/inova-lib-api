@@ -31,21 +31,21 @@ POST https://localhost/user/create
 ```
 #### Update
 ```
-POST https://localhost/user/update/id/{id}
+PUT https://localhost/user/update/id/{id}
 {
     <fields to update>
 }
 ```
 #### Change Password
 ```
-POST https://localhost/user/change-password
+PUT https://localhost/user/change-password
 {
     "password":"password"
 }
 ```
 #### Set Roles
 ```
-POST https://localhost/user/set-roles
+PUT https://localhost/user/set-roles
 {
     "id":"1",
     "roles":[
@@ -71,7 +71,7 @@ POST https://localhost/recover-password/send
 ```
 ##### Change
 ```
-POST https://localhost/recover-password/t/{token}
+POST/PUT https://localhost/recover-password/t/{token}
 {
     "password":"new_password",
 }

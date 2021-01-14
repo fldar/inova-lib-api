@@ -68,7 +68,7 @@ class UserController extends ApiAbstractController
 
     /**
      * @IsGranted("ROLE_USER_ADMIN")
-     * @Route("/set-roles", name="user_set_roles", methods={"POST"})
+     * @Route("/set-roles", name="user_set_roles", methods={"PUT"})
      * @param Request $request
      * @return JsonResponse
      * @throws NonUniqueResultException
@@ -83,7 +83,7 @@ class UserController extends ApiAbstractController
 
     /**
      * @IsGranted("ROLE_USER_WRITE")
-     * @Route("/update/id/{id}", name="user_update", methods={"POST"})
+     * @Route("/update/id/{id}", name="user_update", methods={"PUT"})
      * @param Request $request
      * @param int $id
      * @return JsonResponse
@@ -97,7 +97,7 @@ class UserController extends ApiAbstractController
     }
 
     /**
-     * @Route("/change-password", name="user_change_password", methods={"POST"})
+     * @Route("/change-password", name="user_change_password", methods={"PUT"})
      * @param Request $request
      * @return JsonResponse
      */

@@ -47,7 +47,7 @@ class RecoverPasswordController extends ApiAbstractController
     }
 
     /**
-     * @Route("/t/{token}", name="recover_change_password", methods={"POST"})
+     * @Route("/t/{token}", name="recover_change_password", methods={"POST, PUT"})
      * @param Request $request
      * @param string $token
      * @return JsonResponse
