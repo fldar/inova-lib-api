@@ -71,7 +71,7 @@ POST https://localhost/recover-password/send
 ```
 ##### Change
 ```
-POST/PUT https://localhost/recover-password/t/{token}
+PUT https://localhost/recover-password/t/{token}
 {
     "password":"new_password",
 }
