@@ -66,6 +66,9 @@ GET https://localhost/user/delete/{id}
 ```
 POST https://localhost/recover-password/send
 {
+    // front link where you will have the recover password screen, 
+    // where it will be concatenated with the token and sent by email.
+    "domain" : "http://front.com/recover-password/token/{here the token will be inserted}
     "username":"email@exemple.com" or "username",
 }
 ```

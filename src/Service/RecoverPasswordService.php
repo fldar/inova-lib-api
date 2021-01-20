@@ -18,20 +18,24 @@ class RecoverPasswordService
     private UserRepository $userRepository;
     private UserRecoverRepository $userRecoverRepository;
     private UserService $userService;
+    private MailService $mailService;
 
     /**
      * @param UserRepository $userRepository
      * @param UserRecoverRepository $userRecoverRepository
      * @param UserService $userService
+     * @param MailService $mailService
      */
     public function __construct(
         UserRepository $userRepository,
         UserRecoverRepository $userRecoverRepository,
-        UserService $userService
+        UserService $userService,
+        MailService $mailService
     ) {
         $this->userRepository = $userRepository;
         $this->userRecoverRepository = $userRecoverRepository;
         $this->userService = $userService;
+        $this->mailService = $mailService;
     }
 
     /**
@@ -54,6 +58,7 @@ class RecoverPasswordService
         $userHash = $this->hashFactory($user);
 
         $this->userRecoverRepository->createHash($userHash);
+        $this->mailService->sendEmailRecoverPassword($user->getEmail(), $data->get('domain'), $userHash->getHash());
 
         return $userHash;
     }
